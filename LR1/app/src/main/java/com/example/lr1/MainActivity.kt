@@ -25,9 +25,10 @@ class MainActivity : AppCompatActivity() {
         btn.setOnClickListener{
             val et = findViewById<EditText>(R.id.editTextt)
             val s = et.text.toString()
-            if (s.isBlank())
+            if (s.isBlank()) {
                 et.error = "Ничего не введено"
                 return@setOnClickListener
+            }
             findViewById<TextView>(R.id.last_text).text=s
         }
     }

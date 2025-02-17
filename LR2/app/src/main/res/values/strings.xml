@@ -2,14 +2,14 @@
     <!-- Название программы -->
     <string name="app_name">LR2</string>
     <!-- Вопросы НЕТ-->
-    <string name="question_1_yes">Правда ли, что если долго смотреть на холодильник, он начнёт тебе подмигивать?</string>
-    <string name="question_2_yes">Бетонная стена съедобная?</string>
-    <string name="question_3_yes">Морские котики домашние животные?</string>
-    <string name="question_4_yes">Возможно ли студенту спать 10 часов в день?</string>
+    <string name="question_1_no">Правда ли, что если долго смотреть на холодильник, он начнёт тебе подмигивать?</string>
+    <string name="question_2_no">Бетонная стена съедобная?</string>
+    <string name="question_3_no">Морские котики домашние животные?</string>
+    <string name="question_4_no">Возможно ли студенту спать 10 часов в день?</string>
     <!-- Вопросы ДА-->
-    <string name="question_5_no">Правда ли, что коты тайно управляют миром?</string>
-    <string name="question_6_no">Если долго смотреть на загрузку, программа загрузится быстрее?</string>
-    <string name="question_7_no">Если своего интелекта нет, искуственный не поможет?</string>
+    <string name="question_5_yes">Правда ли, что коты тайно управляют миром?</string>
+    <string name="question_6_yes">Если долго смотреть на загрузку, программа загрузится быстрее?</string>
+    <string name="question_7_yes">Если своего интелекта нет, искуственный не поможет?</string>
     <!-- Тексты для ответов -->
     <string name="false_text">Ага, щас)</string>
     <string name="true_text">Правильно</string>

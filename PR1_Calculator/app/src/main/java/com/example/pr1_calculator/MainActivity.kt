@@ -304,7 +304,7 @@ class MainActivity : AppCompatActivity() {
         val btnEq: Button = findViewById(R.id.buttonEquals)
         btnEq.setOnClickListener {
             try {
-                
+
                 val currentText = curNum.text.toString()
                 // Проверка, если введен только минус
                 if (currentText == "-") {

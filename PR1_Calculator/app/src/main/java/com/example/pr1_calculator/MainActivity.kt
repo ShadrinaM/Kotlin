@@ -87,19 +87,19 @@ class MainActivity : AppCompatActivity() {
             operationText.text = ""
         }
 
-        val btnDel: Button = findViewById(R.id.buttonDel)
-        btnDel.setOnClickListener {
-            val text = curNum.text.toString()
-            if (text.isNotEmpty()) {
-                curNum.setText(text.substring(0, text.length - 1))
-                curNum.setSelection(curNum.text.length) // курсор в конец
-            }
-        }
-
-        val btnNegative: Button = findViewById(R.id.buttonNegative)
-        btnNegative.setOnClickListener {
-            toggleNegativeSign()
-        }
+//        val btnDel: Button = findViewById(R.id.buttonDel)
+//        btnDel.setOnClickListener {
+//            val text = curNum.text.toString()
+//            if (text.isNotEmpty()) {
+//                curNum.setText(text.substring(0, text.length - 1))
+//                curNum.setSelection(curNum.text.length) // курсор в конец
+//            }
+//        }
+//
+//        val btnNegative: Button = findViewById(R.id.buttonNegative)
+//        btnNegative.setOnClickListener {
+//            toggleNegativeSign()
+//        }
 
         var operation = ""
 
@@ -305,19 +305,19 @@ class MainActivity : AppCompatActivity() {
         btnEq.setOnClickListener {
             try {
 
-                val currentText = curNum.text.toString()
-                // Проверка, если введен только минус
-                if (currentText == "-") {
-                    curNum.error = "Введите число"
-                    curNum.requestFocus()
-
-                    // Удаляем ошибку через 1.5 секунды
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        curNum.error = null
-                    }, 1500)
-
-                    return@setOnClickListener
-                }
+//                val currentText = curNum.text.toString()
+//                // Проверка, если введен только минус
+//                if (currentText == "-") {
+//                    curNum.error = "Введите число"
+//                    curNum.requestFocus()
+//
+//                    // Удаляем ошибку через 1.5 секунды
+//                    Handler(Looper.getMainLooper()).postDelayed({
+//                        curNum.error = null
+//                    }, 1500)
+//
+//                    return@setOnClickListener
+//                }
 
                 num2 = curNum.text.toString().toDouble()
                 num1 = backNum.text.toString().toDouble()
@@ -358,7 +358,6 @@ class MainActivity : AppCompatActivity() {
             catch (e : Exception){
                 if (curNum.text.isEmpty()) {
 
-                    //curNum.text.clear()
                     curNum.error = "Введите число"
                     curNum.requestFocus()
 
@@ -383,7 +382,6 @@ class MainActivity : AppCompatActivity() {
                     return@setOnClickListener
                 } else if (operationText.text.isEmpty()) {
 
-                    //curNum.text.clear()
                     curNum.error = "Введите операцию"
                     curNum.requestFocus()
 
@@ -399,6 +397,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //изменяет знак текущего числа
     private fun toggleNegativeSign() {
         val curNum = findViewById<EditText>(R.id.EditTextCur)
         val currentText = curNum.text.toString()

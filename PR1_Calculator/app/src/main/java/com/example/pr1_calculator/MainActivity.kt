@@ -1,28 +1,9 @@
-//package com.example.pr1_calculator
-//
-//import android.os.Bundle
-//import androidx.activity.enableEdgeToEdge
-//import androidx.appcompat.app.AppCompatActivity
-//import androidx.core.view.ViewCompat
-//import androidx.core.view.WindowInsetsCompat
-//
-//class MainActivity : AppCompatActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
-//        setContentView(R.layout.activity_main)
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
-//    }
-//}
-
 package com.example.pr1_calculator
 
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -34,11 +15,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val curNum = findViewById<EditText>(R.id.textViewO)
+        val curNum = findViewById<EditText>(R.id.EditTextCur)
         val backNum = findViewById<TextView>(R.id.textViewNum)
         val operationText = findViewById<TextView>(R.id.textViewSign)
         var num1 = 0.0
         var num2: Double
+
 
         val btn1: Button = findViewById(R.id.button1)
         btn1.setOnClickListener {
@@ -105,11 +87,35 @@ class MainActivity : AppCompatActivity() {
             operationText.text = ""
         }
 
+        val btnDel: Button = findViewById(R.id.buttonDel)
+        btnDel.setOnClickListener {
+            val text = curNum.text.toString()
+            if (text.isNotEmpty()) {
+                curNum.setText(text.substring(0, text.length - 1))
+                curNum.setSelection(curNum.text.length) // курсор в конец
+            }
+        }
+
+        val btnNegative: Button = findViewById(R.id.buttonNegative)
+        btnNegative.setOnClickListener {
+            toggleNegativeSign()
+        }
 
         var operation = ""
 
         val btnAdd: Button = findViewById(R.id.buttonPlus)
         btnAdd.setOnClickListener {
+            if (curNum.text.isEmpty()) {
+                curNum.error = "Введите число"
+                curNum.requestFocus()
+
+                // создаёт паралельный поток и удаляет ошибку через 2 секунды
+                Handler(Looper.getMainLooper()).postDelayed({
+                    curNum.error = null
+                }, 1500)
+
+                return@setOnClickListener
+            }
             if (backNum.text.isEmpty() && operationText.text.isEmpty()) {
                 operation = "+"
                 operationText.text = operation
@@ -149,6 +155,17 @@ class MainActivity : AppCompatActivity() {
 
         val btnMin: Button = findViewById(R.id.buttonMinus)
         btnMin.setOnClickListener {
+            if (curNum.text.isEmpty()) {
+                curNum.error = "Введите число"
+                curNum.requestFocus()
+
+                // создаёт паралельный поток и удаляет ошибку через 2 секунды
+                Handler(Looper.getMainLooper()).postDelayed({
+                    curNum.error = null
+                }, 1500)
+
+                return@setOnClickListener
+            }
             if (backNum.text.isEmpty() && operationText.text.isEmpty()) {
                 operation = "-"
                 operationText.text = operation
@@ -187,6 +204,17 @@ class MainActivity : AppCompatActivity() {
 
         val btnDiv: Button = findViewById(R.id.buttonDiv)
         btnDiv.setOnClickListener {
+            if (curNum.text.isEmpty()) {
+                curNum.error = "Введите число"
+                curNum.requestFocus()
+
+                // создаёт паралельный поток и удаляет ошибку через 2 секунды
+                Handler(Looper.getMainLooper()).postDelayed({
+                    curNum.error = null
+                }, 1500)
+
+                return@setOnClickListener
+            }
             if (backNum.text.isEmpty() && operationText.text.isEmpty()) {
                 operation = "/"
                 operationText.text = operation
@@ -225,6 +253,17 @@ class MainActivity : AppCompatActivity() {
 
         val btnMulti: Button = findViewById(R.id.buttonMult)
         btnMulti.setOnClickListener {
+            if (curNum.text.isEmpty()) {
+                curNum.error = "Введите число"
+                curNum.requestFocus()
+
+                // создаёт паралельный поток и удаляет ошибку через 2 секунды
+                Handler(Looper.getMainLooper()).postDelayed({
+                    curNum.error = null
+                }, 1500)
+
+                return@setOnClickListener
+            }
             if (backNum.text.isEmpty() && operationText.text.isEmpty()) {
                 operation = "*"
                 operationText.text = operation
@@ -265,6 +304,21 @@ class MainActivity : AppCompatActivity() {
         val btnEq: Button = findViewById(R.id.buttonEquals)
         btnEq.setOnClickListener {
             try {
+                
+                val currentText = curNum.text.toString()
+                // Проверка, если введен только минус
+                if (currentText == "-") {
+                    curNum.error = "Введите число"
+                    curNum.requestFocus()
+
+                    // Удаляем ошибку через 1.5 секунды
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        curNum.error = null
+                    }, 1500)
+
+                    return@setOnClickListener
+                }
+
                 num2 = curNum.text.toString().toDouble()
                 num1 = backNum.text.toString().toDouble()
                 var result = 0.0
@@ -272,6 +326,12 @@ class MainActivity : AppCompatActivity() {
 
                     curNum.error = "Деление на ноль не допускается"
                     curNum.requestFocus()
+
+                    // создаёт паралельный поток и удаляет ошибку через 2 секунды
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        curNum.error = null
+                    }, 1500)
+
                     return@setOnClickListener
                 }
                 else {
@@ -301,6 +361,12 @@ class MainActivity : AppCompatActivity() {
                     //curNum.text.clear()
                     curNum.error = "Введите число"
                     curNum.requestFocus()
+
+                    // создаёт паралельный поток и удаляет ошибку через 2 секунды
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        curNum.error = null
+                    }, 1500)
+
                     return@setOnClickListener
 
                 } else if (backNum.text.isEmpty()) {
@@ -308,16 +374,45 @@ class MainActivity : AppCompatActivity() {
                     //curNum.text.clear()
                     curNum.error = "Введите операцию"
                     curNum.requestFocus()
+
+                    // создаёт паралельный поток и удаляет ошибку через 2 секунды
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        curNum.error = null
+                    }, 1500)
+
                     return@setOnClickListener
                 } else if (operationText.text.isEmpty()) {
 
                     //curNum.text.clear()
                     curNum.error = "Введите операцию"
                     curNum.requestFocus()
+
+                    // создаёт паралельный поток и удаляет ошибку через 2 секунды
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        curNum.error = null
+                    }, 1500)
+
                     return@setOnClickListener
                 }
             }
 
+        }
+    }
+
+    private fun toggleNegativeSign() {
+        val curNum = findViewById<EditText>(R.id.EditTextCur)
+        val currentText = curNum.text.toString()
+
+        if (currentText.isNotEmpty()) {
+            if (currentText[0] == '-') {
+                // Если минус уже есть, удаляем его
+                curNum.setText(currentText.substring(1))
+            } else {
+                // Если минуса нет, добавляем его
+                curNum.setText("-$currentText")
+            }
+            // Устанавливаем курсор в конец текста
+            curNum.setSelection(curNum.text.length)
         }
     }
 }

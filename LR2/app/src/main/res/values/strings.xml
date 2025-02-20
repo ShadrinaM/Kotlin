@@ -14,4 +14,6 @@
     <string name="false_text">Ага, щас)</string>
     <string name="true_text">Правильно</string>
     <string name="cheater_text">Ай-яй-яй, не списывай!</string>
+    <string name="_see">Подсмотреть</string>
+    <string name="_dontSee">Подглядывать не хорошо!</string>
 </resources>

@@ -18,6 +18,8 @@ class QuizDataModel: ViewModel() {
 
     private var currentIndex=0;
 
+    var isCheater=false
+
     val currentQuestAnswer: Boolean
         get() = questionBank[currentIndex].answer
 
@@ -25,10 +27,12 @@ class QuizDataModel: ViewModel() {
         get() = questionBank[currentIndex].textResId
 
     fun moveToNext(){
+        isCheater=false
         currentIndex = (currentIndex + 1) % questionBank.size
     }
 
     fun moveToPrev(){
+        isCheater=false
         currentIndex = (questionBank.size + currentIndex - 1) % questionBank.size
     }
 

@@ -1,11 +1,15 @@
 package com.example.lr2
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -65,6 +69,21 @@ class MainActivity : AppCompatActivity() {
             quizViewModel.moveToPrev()
             updateQuestion()
         }
+
+        findViewById<Button>(R.id.buttonShowCheat).setOnClickListener {
+            //или код  фотки
+            val intent = CheatActivity.newIntent(this@MainActivity, quizViewModel.currentQuestAnswer)
+            startActivity(intent)
+        }
+
+        val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                quizViewModel.isCheater = data?. getBooleanExtra(EXTRA_ANSWER_SHOW, false)?:false
+            }
+
+        }
+
     }
 
     private fun updateQuestion(){

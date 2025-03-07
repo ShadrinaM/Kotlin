@@ -1,65 +1,64 @@
 package com.example.lr3.repositores
 
-import android.icu.text.Transliterator.Position
 import androidx.lifecycle.MutableLiveData
 import com.example.lr3.data.Faculty
-import com.example.lr3.data.ListOfFaculty
+import com.example.lr3.data.ListofFaculty
 
-class MainRepository private constructor(){
+class MainRepository private constructor() {
 
-    companion object{
-        private  var INSTANCE: MainRepository?=null
+    companion object {
+        private var INSTANCE: MainRepository?=null
 
         fun getInstance(): MainRepository{
             if (INSTANCE == null){
                 INSTANCE = MainRepository()
             }
-            return INSTANCE?: throw IllegalStateException("Репозиторий не идентифицирован")
+            return INSTANCE?: throw IllegalStateException("Repository not found")
         }
     }
 
-    val listOfFaculty: MutableLiveData<ListOfFaculty?> = MutableLiveData()
+    var listofFaculty: MutableLiveData<ListofFaculty?> = MutableLiveData()
     var faculty: MutableLiveData<Faculty> = MutableLiveData()
 
-    fun addFaculty(faculty: Faculty){
-        val listTemp = (listOfFaculty.value ?: ListOfFaculty()).apply {
+    fun addFaculty (faculty: Faculty){
+        val listTmp = (listofFaculty.value ?: ListofFaculty().apply {
             items.add(faculty)
-        }
-        listOfFaculty.postValue(listTemp)
+        })
+        listofFaculty.postValue(listTmp)
         setCurrentFaculty(faculty)
     }
 
     fun updateFaculty(faculty: Faculty){
         val position = getFacultyPosition(faculty)
-        if (position<0) addFaculty(faculty)
+        if(position<0) addFaculty(faculty)
         else {
-            val listTemp = listOfFaculty.value!!
-            listTemp.items[position]=faculty
-            listOfFaculty.postValue(listTemp)
+            val listTmp = listofFaculty.value!!
+            listTmp.items[position] = faculty
+            listofFaculty.postValue(listTmp)
         }
     }
 
     fun deleteFaculty(faculty: Faculty){
-        val listTemp = listOfFaculty.value!!
-        if (listTemp.items.remove(faculty)){
-            listOfFaculty.postValue((listTemp))
+        val listTmp = listofFaculty.value!!
+        if (listTmp.items.remove(faculty)){
+            listofFaculty.postValue(listTmp)
         }
         setCurrentFaculty(0)
     }
 
-    fun getFacultyPosition(faculty: Faculty): Int = listOfFaculty.value?.items?.indexOfFirst {
-        it.id==faculty.id}?:1
+    fun getFacultyPosition(faculty: Faculty):Int = listofFaculty.value?.items?.indexOfFirst {
+        it.id == faculty.id } ?:-1
 
-    fun getFacultyPosition()=getFacultyPosition(faculty.value?: Faculty())
+    fun getFacultyPosition() = getFacultyPosition(faculty.value?:Faculty())
 
     fun setCurrentFaculty(position: Int){
-        if (listOfFaculty.value ==null || position < 0 ||
-            (listOfFaculty.value?.items?.size!!<=position))
+        if (listofFaculty.value == null || position < 0 ||
+            (listofFaculty.value?.items?.size!!<=position))
             return
-        setCurrentFaculty(listOfFaculty.value?.items!![position])
+        setCurrentFaculty(listofFaculty.value?.items!![position])
     }
 
     fun setCurrentFaculty(_faculty: Faculty){
-        faculty.postValue((_faculty))
+        faculty.postValue(_faculty) // чтобы не использовать this делают с нижними подчёркиванием
     }
 }

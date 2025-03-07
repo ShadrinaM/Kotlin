@@ -73,15 +73,15 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonShowCheat).setOnClickListener {
             //или код  фотки
             val intent = CheatActivity.newIntent(this@MainActivity, quizViewModel.currentQuestAnswer)
-            startActivity(intent)
+            // startActivity(intent)
+            resultLauncher.launch(intent)
         }
+    }
 
-        val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                quizViewModel.isCheater = data?. getBooleanExtra(EXTRA_ANSWER_SHOW, false)?:false
-            }
-
+    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            quizViewModel.isCheater = data?. getBooleanExtra(EXTRA_ANSWER_SHOW, false)?:false
         }
 
     }
@@ -96,13 +96,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkAnswer(userAnswer:Boolean){
         val correctAnswer = quizViewModel.currentQuestAnswer
+        val isCheat=quizViewModel.isCheater
         val messageResId = when {
+            isCheat->R.string.cheter_text
             userAnswer == correctAnswer -> R.string.true_text
             else -> R.string.false_text
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
             .show()
-
         // всплывающее сообщение(контекст, строка или id строкового ресурса,время отображения сообщения)
+
+
+
+
     }
 }

@@ -1,5 +1,6 @@
 package com.example.lr2
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -46,6 +47,11 @@ class CheatActivity : AppCompatActivity() {
             }
             answerTextView.setText(answerText)
             showAnswerButton.visibility = View.GONE
+
+            val data = Intent().apply {
+                putExtra(EXTRA_ANSWER_SHOW, true)
+            }
+            setResult(Activity.RESULT_OK, data)
         }
     }
 }

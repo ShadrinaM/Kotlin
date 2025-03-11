@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">PR2_Form</string>
+
+    <string name="buttonSave">Сохранить</string>
+    <string name="buttonChange">Изменить</string>
+
+    <string name="tvNameFIO">ФИО:</string>
+    <string name="tvNameGroup">Группа:</string>
+    <string name="tvNameFaculty">Факультет:</string>
+    <string name="tvNameDateofbirth">Дата рождения:</string>
+    <string name="tvNamePhone">Телефон:</string>
+
+    <string name="tvConstFIO">ФИО</string>
+    <string name="tvConstGroup">Группа</string>
+    <string name="tvConstFaculty">Факультет</string>
+    <string name="tvConstDateofbirth">**.**.****</string>
+    <string name="tvConstPhone">+7(***)*******</string>
+
+    <string name="etFIO">ФИО</string>
+    <string name="etGroup">Группа</string>
+    <string name="etFaculty">Факультет</string>
+    <string name="etdateB">Дата рождения</string>
+    <string name="etphone">Телефон</string>
+
+</resources>

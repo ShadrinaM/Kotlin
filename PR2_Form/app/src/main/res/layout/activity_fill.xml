@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FillActivity">
+
+    <EditText
+        android:id="@+id/etfio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="@string/etFIO"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.572"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.093" />
+
+    <EditText
+        android:id="@+id/etgroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/etGroup"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/etfio"
+        app:layout_constraintStart_toStartOf="@+id/etfio"
+        app:layout_constraintTop_toBottomOf="@+id/etfio" />
+
+    <EditText
+        android:id="@+id/etfaculty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/etFaculty"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/etgroup"
+        app:layout_constraintStart_toStartOf="@+id/etgroup"
+        app:layout_constraintTop_toBottomOf="@+id/etgroup" />
+
+    <Button
+        android:id="@+id/btsave"
+        android:layout_width="165dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="38dp"
+        android:text="@string/buttonSave"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/etphone"
+        app:layout_constraintStart_toStartOf="@+id/etphone"
+        app:layout_constraintTop_toBottomOf="@+id/etphone" />
+
+    <EditText
+        android:id="@+id/etdateB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/etdateB"
+        android:inputType="datetime|date"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/etfaculty"
+        app:layout_constraintStart_toStartOf="@+id/etfaculty"
+        app:layout_constraintTop_toBottomOf="@+id/etfaculty" />
+
+    <EditText
+        android:id="@+id/etphone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/etphone"
+        android:inputType="phone"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/etdateB"
+        app:layout_constraintStart_toStartOf="@+id/etdateB"
+        app:layout_constraintTop_toBottomOf="@+id/etdateB" />
+</androidx.constraintlayout.widget.ConstraintLayout>

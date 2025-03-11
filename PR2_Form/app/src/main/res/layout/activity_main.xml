@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvgroup"
+        android:layout_width="198dp"
+        android:layout_height="44dp"
+        android:text="@string/tvConstGroup"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvfio"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvfio"
+        app:layout_constraintTop_toBottomOf="@+id/tvfio" />
+
+    <TextView
+        android:id="@+id/tvfaculty"
+        android:layout_width="198dp"
+        android:layout_height="44dp"
+        android:text="@string/tvConstFaculty"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvgroup"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvgroup"
+        app:layout_constraintTop_toBottomOf="@+id/tvgroup" />
+
+    <TextView
+        android:id="@+id/tvfio"
+        android:layout_width="198dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/tvConstFIO"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.168" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="150dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/tvNamePhone"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/tvphone"
+        android:layout_width="198dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/tvConstPhone"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvdateB"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvdateB"
+        app:layout_constraintTop_toBottomOf="@+id/tvdateB" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="150dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="32dp"
+        android:text="@string/tvNameDateofbirth"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="150dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="32dp"
+        android:text="@string/tvNameGroup"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="150dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="32dp"
+        android:text="@string/tvNameFIO"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvfio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvfio" />
+
+    <TextView
+        android:id="@+id/tvdateB"
+        android:layout_width="198dp"
+        android:layout_height="44dp"
+        android:text="@string/tvConstDateofbirth"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvfaculty"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvfaculty"
+        app:layout_constraintTop_toBottomOf="@+id/tvfaculty" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="150dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="32dp"
+        android:text="@string/tvNameFaculty"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/btchange"
+        android:layout_width="153dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="92dp"
+        android:text="@string/buttonChange"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvphone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

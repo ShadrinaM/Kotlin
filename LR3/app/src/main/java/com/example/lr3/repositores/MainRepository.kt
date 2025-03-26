@@ -6,8 +6,13 @@ import com.example.lr3.AppList
 import com.example.lr3.data.Faculty
 import com.example.lr3.data.ListofFaculty
 import com.example.lr3.R
+import com.example.lr3.database.MyDAO
+import com.example.lr3.database.MyDatabase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 
 
 class MainRepository private constructor() {
@@ -97,6 +102,12 @@ class MainRepository private constructor() {
     }
 
 
-    
+    private val listDB by lazy {OffineDBRepository(MyDatabase.getDatabase(AppList.context).MyDAO())}
+
+    private val myCoroutine = CoroutineScope(Dispatchers.Main)
+
+    fun onDestroy(){
+        myCoroutine.cancel()
+    }
 
 }

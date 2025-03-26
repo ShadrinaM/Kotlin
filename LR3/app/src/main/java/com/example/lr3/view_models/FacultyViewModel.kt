@@ -8,7 +8,7 @@ import com.example.lr3.data.ListofFaculty
 import com.example.lr3.repositores.MainRepository
 
 class FacultyViewModel : ViewModel() {
-    var facultyList: MutableLiveData<ListofFaculty> = MutableLiveData()
+    var facultyList: MutableLiveData<ListofFaculty?> = MutableLiveData()
     private var _faculty: Faculty? = null
     val faculty
         get()=_faculty

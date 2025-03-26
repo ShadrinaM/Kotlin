@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,8 +39,6 @@ class FacultyFragment : Fragment(), MainActivity.Edit {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
     }
 
     override fun onCreateView(
@@ -60,8 +60,8 @@ class FacultyFragment : Fragment(), MainActivity.Edit {
             binding.rvFaculty.adapter = FacultyAdapter(it?.items ?: emptyList())
         }
     }
-    private inner class FacultyAdapter(private val items: List<Faculty>)
-        :RecyclerView.Adapter<FacultyAdapter.ItemHolder>() {
+    private inner class FacultyAdapter(private val items: List<Faculty>):
+        RecyclerView.Adapter<FacultyAdapter.ItemHolder>() {
 
         override fun onCreateViewHolder(
             parent: ViewGroup,
@@ -72,15 +72,37 @@ class FacultyFragment : Fragment(), MainActivity.Edit {
         }
 
         override fun getItemCount(): Int = items.size
-        override fun onBindViewHolder(holder: ItemHolder, position: Int) {
+        override fun onBindViewHolder(holder: FacultyAdapter.ItemHolder, position: Int) {
             holder.bind(viewModel.facultyList.value!!.items[position])
         }
+
+        private var lastView : View? = null
+        private  fun updatecurrentView(view: View){
+            lastView?.findViewById<ConstraintLayout>(R.id.clFacultyelement)?.setBackgroundColor(
+                ContextCompat.getColor(requireContext(), R.color.white))
+            lastView?.findViewById<TextView>(R.id.tvFacultyName)?.setTextColor(
+                ContextCompat.getColor(requireContext(), R.color.black))
+            view.findViewById<ConstraintLayout>(R.id.clFacultyelement).setBackgroundColor(
+                ContextCompat.getColor(requireContext(), R.color.selected_element))
+            view.findViewById<TextView>(R.id.tvFacultyName)?.setTextColor(
+                ContextCompat.getColor(requireContext(), R.color.white))
+            lastView=view
+        }
+
         private inner class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
             private lateinit var faculty: Faculty
             fun bind(faculty: Faculty) {
                 this.faculty = faculty
+                if (faculty==viewModel.faculty)
+                    updatecurrentView(itemView)
                 val tv = itemView.findViewById<TextView>(R.id.tvFacultyName)
                 tv.text = faculty.name
+
+                val cl=itemView.findViewById<ConstraintLayout>(R.id.clFacultyelement)
+                cl.setOnClickListener{
+                    viewModel.setCurrentFaculty(faculty)
+                    updatecurrentView(itemView)
+                }
             }
         }
     }

@@ -9,6 +9,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.lr3.data.NameofFragment
 import com.example.lr3.fragments.FacultyFragment
+import com.example.lr3.repositores.MainRepository
+import kotlin.jvm.internal.MagicApiIntrinsics
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        showFragment(NameofFragment.FACULTY)
     }
 
     private var _miNewFaculty: MenuItem? = null
@@ -76,5 +79,11 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    override fun onDestroy() {
+        MainRepository.getInstance().saveData()
+        super.onDestroy()
+
     }
 }

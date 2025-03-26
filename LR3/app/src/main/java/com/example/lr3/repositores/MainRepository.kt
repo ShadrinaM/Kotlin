@@ -22,7 +22,7 @@ class MainRepository private constructor() {
             if (INSTANCE == null){
                 INSTANCE = MainRepository()
             }
-            return INSTANCE?: throw IllegalStateException("Repository not found")
+            return INSTANCE?: throw IllegalStateException("Репозиторий не инициализирован")
         }
     }
 

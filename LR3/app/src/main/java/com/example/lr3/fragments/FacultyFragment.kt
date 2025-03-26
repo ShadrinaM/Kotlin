@@ -57,7 +57,7 @@ class FacultyFragment : Fragment(), MainActivity.Edit {
 
         viewModel = ViewModelProvider(this).get(FacultyViewModel::class.java)
         viewModel.facultyList.observe(viewLifecycleOwner){
-            binding.rvFaculty.adapter = FacultyAdapter(it?.items ?: emptyList())
+            binding.rvFaculty.adapter = FacultyAdapter(it ?: emptyList())
         }
     }
     private inner class FacultyAdapter(private val items: List<Faculty>):
@@ -73,7 +73,7 @@ class FacultyFragment : Fragment(), MainActivity.Edit {
 
         override fun getItemCount(): Int = items.size
         override fun onBindViewHolder(holder: FacultyAdapter.ItemHolder, position: Int) {
-            holder.bind(viewModel.facultyList.value!!.items[position])
+            holder.bind(viewModel.facultyList.value!![position])
         }
 
         private var lastView : View? = null

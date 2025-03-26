@@ -8,17 +8,18 @@ import com.example.lr3.data.ListofFaculty
 import com.example.lr3.repositores.MainRepository
 
 class FacultyViewModel : ViewModel() {
-    var facultyList: MutableLiveData<ListofFaculty?> = MutableLiveData()
+    var facultyList = MainRepository.getInstance().listOfFaculty
     private var _faculty: Faculty? = null
     val faculty
         get()=_faculty
-    private val facultyListObserver = Observer<ListofFaculty?>{
-            list->
-        facultyList.postValue(list)
-    }
+
+//    private val facultyListObserver = Observer<ListofFaculty?>{
+//            list->
+//        facultyList.postValue(list)
+//    }
 
     init{
-        MainRepository.getInstance().listofFaculty.observeForever(facultyListObserver)
+//        MainRepository.getInstance().listofFaculty.observeForever(facultyListObserver)
         MainRepository.getInstance().faculty.observeForever{
             _faculty=it
         }

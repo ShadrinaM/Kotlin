@@ -1,18 +1,16 @@
 package com.example.lr3.repositores
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.preference.PreferenceManager
+import androidx.lifecycle.asLiveData
 import com.example.lr3.AppList
 import com.example.lr3.data.Faculty
 import com.example.lr3.data.ListofFaculty
-import com.example.lr3.R
-import com.example.lr3.database.MyDAO
 import com.example.lr3.database.MyDatabase
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 
 class MainRepository private constructor() {
@@ -104,10 +102,38 @@ class MainRepository private constructor() {
 
     private val listDB by lazy {OffineDBRepository(MyDatabase.getDatabase(AppList.context).MyDAO())}
 
-    private val myCoroutine = CoroutineScope(Dispatchers.Main)
+    private val myCoroutineScope = CoroutineScope(Dispatchers.Main)
 
     fun onDestroy(){
-        myCoroutine.cancel()
+        myCoroutineScope.cancel()
     }
 
+    val listOfFaculty: LiveData<List<Faculty>> = listDB.getFaculty()
+        .asLiveData()
+
+    fun addFaculty(faculty: Faculty){
+        myCoroutineScope.launch {
+            listDB.insertFaculty(faculty)
+            setCurrentFaculty(faculty)
+        }
+    }
+    fun updateFaculty(faculty: Faculty){
+        addFaculty(faculty)
+    }
+    fun deleteFaculty(faculty: Faculty){
+        myCoroutineScope.launch {
+            listDB.deleteFaculty(faculty)
+            setCurrentFaculty(0)
+        }
+    }
+
+    fun setCurrentFaculty(position: Int){
+        if (position < 0 || (listofFaculty.value?.items?.size!!<=position))
+            return
+        setCurrentFaculty(listofFaculty.value?.items!![position])
+    }
+
+    fun setCurrentFaculty(_faculty: Faculty){
+        faculty.postValue(_faculty)
+    }
 }

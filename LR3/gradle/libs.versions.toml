@@ -1,6 +1,6 @@
 [versions]
-agp = "8.7.2"
-kotlin = "1.9.24"
+agp = "8.7.3"
+kotlin = "2.1.10"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -15,9 +15,10 @@ lifecycleViewmodelKtx = "2.6.1"
 fragmentKtx = "1.5.6"
 gson = "2.12.1"
 preferenceKtx = "1.2.0"
-roomKtx = "2.6.0-alpha01"
+roomKtx = "2.6.1"
 roomRuntime = "2.6.0-alpha01"
 roomCompiler = "2.6.0-alpha01"
+symbolProcessingApi = "2.1.10-1.0.31"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,6 +38,7 @@ androidx-preference-ktx = { group = "androidx.preference", name = "preference-kt
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomRuntime" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
+symbol-processing-api = { group = "com.google.devtools.ksp", name = "symbol-processing-api", version.ref = "symbolProcessingApi" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

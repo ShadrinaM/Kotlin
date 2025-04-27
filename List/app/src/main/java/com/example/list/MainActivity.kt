@@ -3,6 +3,7 @@ package com.example.list
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,6 +13,7 @@ import com.example.list.data.NameofFragment
 import com.example.list.data.Student
 import com.example.list.fragments.FacultyFragment
 import com.example.list.fragments.GroupFragment
+import com.example.list.fragments.StudentFragment
 import com.example.list.interfaces.MainActivityCallbacks
 import com.example.list.repositories.MainRepository
 
@@ -32,7 +34,23 @@ class MainActivity : AppCompatActivity(),MainActivityCallbacks {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        showFragment(NameofFragment.FACULTY)
+//        showFragment(NameofFragment.FACULTY)
+        onBackPressedDispatcher.addCallback(this){
+            if (supportFragmentManager.backStackEntryCount>0){
+                supportFragmentManager.popBackStack()
+                when (activeFragment) {
+                    NameofFragment.FACULTY -> {
+                        finish()
+                    }
+                    NameofFragment.GROUP -> {
+                        activeFragment=NameofFragment.FACULTY
+                    }
+                    NameofFragment.STUDENT -> {
+                        activeFragment=NameofFragment.GROUP
+                    }
+                }
+            }
+        }
     }
 
     private var _miNewFaculty: MenuItem? = null
@@ -116,7 +134,12 @@ class MainActivity : AppCompatActivity(),MainActivityCallbacks {
                     .commit()
             }
             NameofFragment.STUDENT-> {
-                //тут ещё что-то будет
+                if (student!=null)
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fcvMain, StudentFragment.newInstance(student))
+                        .addToBackStack(null)
+                        .commit()
             }
         }
         updateMenu(fragmentType)

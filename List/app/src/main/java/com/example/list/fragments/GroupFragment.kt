@@ -44,7 +44,8 @@ class GroupFragment : Fragment(), MainActivity.Edit {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_group, container, false)
+        _binding=FragmentGroupBinding.inflate(inflater, container,false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

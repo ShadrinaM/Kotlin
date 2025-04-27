@@ -51,11 +51,23 @@ interface MyDAO {
 
     //Для Group
 
-    @Query("SELECT * FROM groups")
+//    @Query("SELECT * FROM groups")
+//    fun getAllGroups(): Flow<List<Group>>
+//
+//    @Query("SELECT * FROM groups where faculty_id=:facultyID")
+//    fun getFacultyGroups(facultyID: UUID): List<Group>
+
+//    @Query("DELETE FROM groups")
+//    suspend fun deleteAllGroup()
+
+    @Query("SELECT * FROM `groups`")  // Обратите внимание на кавычки
     fun getAllGroups(): Flow<List<Group>>
 
-    @Query("SELECT * FROM groups where faculty_id=:facultyID")
+    @Query("SELECT * FROM `groups` where faculty_id=:facultyID")
     fun getFacultyGroups(facultyID: UUID): List<Group>
+
+    @Query("DELETE FROM `groups`")
+    suspend fun deleteAllGroup()
 
     @Insert(entity = Group::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGroup(group: Group)
@@ -63,7 +75,6 @@ interface MyDAO {
     @Delete(entity = Group::class)
     suspend fun deleteGroup(group: Group)
 
-    @Query("DELETE FROM groups")
-    suspend fun deleteAllGroup()
+
 
 }

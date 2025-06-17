@@ -22,5 +22,6 @@ import java.util.UUID
 class Group (
     @PrimaryKey val id: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "group_name")var name : String = "",
-    @ColumnInfo(name = "faculty_id")var facultyID: UUID?=null
+    // изменено для сервера
+    @ColumnInfo(name = "faculty_id")var facultyID: Long = -1L
 )

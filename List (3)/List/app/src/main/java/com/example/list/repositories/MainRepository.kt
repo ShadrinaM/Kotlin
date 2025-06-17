@@ -4,28 +4,24 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import androidx.preference.PreferenceManager
 import com.example.list.API.ListConnection
 import com.example.list.API.PostResult
 import com.example.list.API.serverAPI
 import com.example.list.AppList
-import com.example.list.Data.Faculties
 import com.example.list.Data.Faculty
 import com.example.list.Data.Group
-import com.example.list.Data.ListOfFaculty
 import com.example.list.Data.MyConsts
 import com.example.list.Data.Student
-import com.example.list.R
-import com.example.list.database.MyDAO
 import com.example.list.database.MyDatabase
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.http.Tag
 import java.util.UUID
 
 class MainRepository private constructor() {
@@ -125,16 +121,16 @@ class MainRepository private constructor() {
     val listOfFaculty: LiveData<List<Faculty>> = listDB.getFaculty()
         .asLiveData()
 
-    fun addFaculty(faculty: Faculty){
+    fun addFacultyDB(faculty: Faculty){
         myCoroutineScope.launch {
             listDB.insertFaculty(faculty)
             setCurrentFaculty(faculty)
         }
     }
-    fun updateFaculty(faculty: Faculty){
-        addFaculty(faculty)
+    fun updateFacultyDB(faculty: Faculty){
+        addFacultyDB(faculty)
     }
-    fun deleteFaculty(faculty: Faculty){
+    fun deleteFacultyDB(faculty: Faculty){
         myCoroutineScope.launch {
             listDB.deleteFaculty(faculty)
             setCurrentFaculty(0)
@@ -188,9 +184,7 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
 
     val facultyGroups
         get() = {
-            if (faculty.value != null)
-                listDB.getFacultyGroups(faculty.value!!.id)
-            else emptyList()
+            listOfGroup.value?.filter { it.facultyID == faculty.value?.id } ?: emptyList()
         }
 
     fun addGroup(group: Group){
@@ -231,40 +225,62 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
 
     private var listAPI = ListConnection.getClient().create(serverAPI::class.java)
 
+    // получить факультет
     fun fetchFaculties() {
-        listAPI.getFaculties().enqueue(object : Callback<Faculties> {
-            override fun onFailure(call: Call<Faculties>, t: Throwable) {
-                Log.d(TAG, "Ошибка получения списка факультетов", t)
+        listAPI.getFaculty().enqueue(object : Callback<List<Faculty>> {
+            override fun onFailure(call: Call<List<Faculty>>, t: Throwable) {
+                Log.d(MyConsts.TAG, "Ошибка получения списка факультетов", t)
             }
 
-            override fun onResponse(call: Call<Faculties>, response: Response<Faculties>) {
+            override fun onResponse(call: Call<List<Faculty>>, response: Response<List<Faculty>>) {
                 if (response.code() == 200) {
                     val faculties = response.body()
-                    Log.d(TAG, "Получен список факультетов ${response.body()} ${faculties}")
-                    val items = faculties?.items ?: emptyList()
-                    Log.d(TAG, "Получен список факультетов $items")
+                    Log.d(MyConsts.TAG, "Получен список факультетов ${faculties}")
                     myCoroutineScope.launch {
                         listDB.deleteAllFaculty()
-                        for (f in items)
+                        for (f in faculties?: emptyList())
                             listDB.insertFaculty(f)
                     }
                 }
-                fetchGroups()
+                // т.к. нет групп
+                //fetchGroups()
             }
         })
     }
 
 
-    private fun updateFaculties(postFaculty: PostFaculty) {
-        listAPI.postFaculty(postFaculty)
-            .enqueue(object : Callback<PostResult> {
-                override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
+    private fun updateFaculties(faculty: Faculty) {
+        listAPI.postFaculty(faculty)
+            .enqueue(object : Callback<Unit> {
+                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                     if (response.code() == 200) fetchFaculties()
                 }
 
-                override fun onFailure(call: Call<PostResult>, t: Throwable) {
+                override fun onFailure(call: Call<Unit>, t: Throwable) {
                     Log.d(MyConsts.TAG, "Ошибка записи факультета", t)
                 }
             })
+    }
+    fun addFaculty(faculty:Faculty){
+        updateFaculties(Faculty(-1L, faculty.name))
+    }
+
+    fun updateFaculty(faculty: Faculty){
+        updateFaculties(faculty)
+    }
+
+    fun deleteFaculty(faculty: Faculty){
+        Log.d(MyConsts.TAG, "Попытка удаления факультета ${faculty.toString()}")
+        listAPI.deleteFaculty(faculty.id.toString())
+            .enqueue(object:Callback<Unit>{
+                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                    if (response.code()==200) fetchFaculties()
+                }
+
+                override fun onFailure(call: Call<Unit>, t: Throwable) {
+                    Log.d(MyConsts.TAG, "Ошибка удаления факультета")
+                }
+            }
+            )
     }
 }

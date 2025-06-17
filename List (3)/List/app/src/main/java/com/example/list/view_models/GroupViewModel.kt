@@ -30,10 +30,11 @@ class GroupViewModel : ViewModel() {
             MainRepository.getInstance().deleteGroup(group!!)
     }
 
+    // изменено для сервера
     fun appendGroup(groupName : String) {
         val group = Group()
         group.name = groupName
-        group.facultyID = faculty?.id
+        group.facultyID = faculty?.id?: -1L
         MainRepository.getInstance().addGroup(group)
     }
 

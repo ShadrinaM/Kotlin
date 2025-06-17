@@ -11,7 +11,7 @@ import java.util.UUID
 )
 
 data class Faculty (
-    @PrimaryKey val id: UUID = UUID.randomUUID(),
+    //изменено для сервера
+    @PrimaryKey val id: Long = -1L,
     @ColumnInfo(name = "faculty_name") var name : String = ""
-
 )

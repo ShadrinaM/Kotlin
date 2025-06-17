@@ -6,8 +6,9 @@
         android:name = "android.hardware.telephony"
         android:required="false" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
+        android:networkSecurityConfig="@xml/network_security_config"
         android:name=".AppList"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"

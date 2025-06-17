@@ -1,40 +1,49 @@
 package com.example.list.API
 
-import com.example.list.Data.Faculties
 import com.example.list.Data.Faculty
 import com.example.list.Data.Group
-import com.example.list.Data.Groups
 import com.example.list.Data.Student
-import com.example.list.Data.Students
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface serverAPI {
+    // Для факультетов
     @GET("faculties")
-    fun getFaculty(): Call<Faculties>
+    fun getFaculty(): Call<List<Faculty>>
 
     @Headers("Content-Type: application/json")
     @POST("faculty")
-    fun postFaculty(@Body faculty: Faculty): Call<PostResult>
+    fun postFaculty(@Body faculty: Faculty): Call<Unit>
 
-    @Headers("Content-Type: application/json")
-    @POST("faculty")
-    fun deleteFaculty(@Body faculty: Faculty): Call<PostResult>
+    @DELETE("faculty/{id}")
+    fun deleteFaculty(@Path ("id") id : String): Call<Unit>
 
+    // Для групп
     @GET("groups")
-    fun getGroups(): Call<Groups>
+    fun getGroups(): Call<List<Group>>
 
     @Headers("Content-Type: application/json")
     @POST("group")
-    fun postGroup(@Body group: Group): Call<PostResult>
+    fun postGroup(@Body group: Group): Call<Unit>
 
+    @DELETE("group/{id}")
+    fun deleteGroup(@Path("id") id: String): Call<Unit>
+
+    // Для студентов
     @GET("students")
-    fun getStudents(): Call<Students>
+    fun getStudents(): Call<List<Student>>
 
     @Headers("Content-Type: application/json")
-    @POST("students")
-    fun postGroup(@Body student: Student): Call<PostResult>
+    @POST("student")
+    fun postStudent(@Body student: Student): Call<Unit>
+
+    @DELETE("student/{id}")
+    fun deleteStudent(@Path("id") id: String): Call<Unit>
+
+
 }
